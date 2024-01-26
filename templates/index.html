@@ -1,94 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>render template</title>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="font-weight: bold;">Thameem</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Menu
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Contact</a></li>
-                <li><a class="dropdown-item" href="#">About</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">More</a></li>
-              </ul>
-            <!-- </li> -->
-            <!-- <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li> -->
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-    </nav>
+{% extends'layout.html' %}
+{% block body %}
     <div class="container">
       <h3 class="mt-5">Add a ToDo</h3>
-      <form>
+      <form action="/" method="POST">
         <div class="mb-3">
-          <label for="title" class="form-label">ToDo Title</label>
-          <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+          <label for="title"  class="form-label">ToDo Title</label>
+          <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
           <label for="desc" class="form-label">ToDo Description</label>
-          <input type="text" class="form-control" id="desc">
+          <input type="text" name="desc" class="form-control" id="desc">
         </div>
         
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-dark">Submit</button>
       </form>
     </div>
     <div class="container my-5 p-3 " style="border: 3px solid black;">
-      <table class="table">
+      
         <h3 class="my-3">Your To_Do's</h3>
-        <thead>
+       
+       
+          {% if allTodo|length==0  %}
+          <div class="alert alert-dark" role="alert">
+            No To-Do's Found!, Add your To-Do's Now. 
+          </div>
+            
+          {% else %}
+              <table class="table">
+                  <thead>
+                    <tr>
+                        <th scope="col">Sno </th>
+                        <th scope="col">Tite</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Time</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                <tbody>
+          
+          {% for todo in allTodo %}
+          
           <tr>
-            <th scope="col">Sno </th>
-            <th scope="col">Thameem</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{todo.title}}</td>
+            <td>{{todo.desc}}</td>
+            <td>{{todo.created_date}}</td>
+            <td>
+              <a href="/update/{{todo.sno}}" type="button" class="btn btn-dark btn-sm mx-1">Edit</a>
+            <a href="/delete/{{todo.sno}}" type="button" class="btn btn-dark btn-sm mx-1">Delete</a>
+          </td>
           </tr>
         </tbody>
-      </table>
+          {% endfor %}
+          {% endif %}
+          
+        </table>
+
     </div>
-</body>
-</html>
+    {% endblock body %}
