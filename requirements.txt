@@ -2,5 +2,3 @@ flask
 python-dotenv
 
 
-Flask==2.0.1
-Flask-SQLAlchemy==3.0.0
