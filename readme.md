@@ -1,2 +1,3 @@
-this is my first appbuilt using flask, its not completed yet im working to make it fully functional.
+this a todo app built using flask
 thanks for trying
+
